@@ -30,15 +30,15 @@ class Movie
     #[ORM\Column]
     private ?int $duration = null;
 
-    #[ORM\Column]
-    private ?bool $online = null;
-
     #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
     private Collection $actor;
 
     #[ORM\ManyToOne(inversedBy: 'movies')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
+    private ?string $boxOffice = null;
 
     public function __construct()
     {
@@ -98,18 +98,6 @@ class Movie
         return $this;
     }
 
-    public function isOnline(): ?bool
-    {
-        return $this->online;
-    }
-
-    public function setOnline(bool $online): static
-    {
-        $this->online = $online;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Actor>
      */
@@ -142,6 +130,18 @@ class Movie
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getBoxOffice(): ?string
+    {
+        return $this->boxOffice;
+    }
+
+    public function setBoxOffice(string $boxOffice): static
+    {
+        $this->boxOffice = $boxOffice;
 
         return $this;
     }
