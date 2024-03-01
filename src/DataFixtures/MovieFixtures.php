@@ -24,7 +24,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
       $movie->setBoxOffice(rand(50000000, 999999999));
       $movie->setMetascore(rand(1, 100));
       $movie->setCategory($this->getReference('category_' . rand(1, 6)));
-      foreach (range(1, rand(2, 38)) as $a) {
+      foreach (range(1, rand(2, 10)) as $a) {
         $movie->addActor($this->getReference('actor_' . rand(1, 40)));
       }
 
