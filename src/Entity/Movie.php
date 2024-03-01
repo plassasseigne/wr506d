@@ -2,18 +2,22 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\MovieRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['movie:read']]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 class Movie
 {
     #[ORM\Id]
@@ -24,18 +28,22 @@ class Movie
 
     #[ORM\Column(length: 255)]
     #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'The movie title is required')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'The movie description is required')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'The release date is required')]
     private ?\DateTimeInterface $release_date = null;
 
     #[ORM\Column]
     #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'The duration is required')]
     private ?int $duration = null;
 
     #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
@@ -45,14 +53,27 @@ class Movie
     #[ORM\ManyToOne(inversedBy: 'movies')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'The category is required')]
     private ?Category $category = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0', nullable: true)]
     #[Groups(['movie:read'])]
+    #[Assert\Positive(message: 'The box office must be positive')]
+    #[Assert\Range(
+        min: 1,
+        max: 1000000000,
+        notInRangeMessage: 'The box office needs to have a value between {{ min }} and {{ max }}'
+    )]
     private ?string $box_office = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     #[Groups(['movie:read'])]
+    #[Assert\Positive(message: 'The metascore must be positive')]
+    #[Assert\Range(
+        min: 1,
+        max: 100,
+        notInRangeMessage: 'The metascore needs to have a value between {{ min }} and {{ max }}'
+    )]
     private ?int $metascore = null;
 
     public function __construct()

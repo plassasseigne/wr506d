@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategoryRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource()]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
 class Category
 {
     #[ORM\Id]
@@ -21,6 +25,7 @@ class Category
 
     #[ORM\Column(length: 255)]
     #[Groups(['movie:read'])]
+    #[Assert\NotBlank(message: 'The category title is required')]
     private ?string $name = null;
 
     #[ORM\OneToMany(targetEntity: Movie::class, mappedBy: 'category')]

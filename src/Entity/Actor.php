@@ -2,43 +2,51 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ActorRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['actor:read']]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['first_name' => 'partial', 'last_name' => 'partial'])]
 class Actor
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['actor:read', 'movie:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['actor:read', 'movie:read'])]
+    #[Assert\NotBlank(message: 'The first name is required')]
     private ?string $first_name = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['actor:read', 'movie:read'])]
+    #[Assert\NotBlank(message: 'The last name is required')]
     private ?string $last_name = null;
 
     #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'actor')]
     private Collection $movies;
 
     #[ORM\ManyToOne(inversedBy: 'actors')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups(['actor:read', 'movie:read'])]
     private ?Nationality $nationality = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['actor:read', 'movie:read'])]
+    #[Assert\NotBlank(message: 'The birthday is required')]
     private ?\DateTimeInterface $date_birth = null;
 
     public function __construct()

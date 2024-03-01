@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\NationalityRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NationalityRepository::class)]
 #[ApiResource()]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
 class Nationality
 {
     #[ORM\Id]
@@ -21,6 +25,7 @@ class Nationality
 
     #[ORM\Column(length: 255)]
     #[Groups(['actor:read', 'movie:read'])]
+    #[Assert\NotBlank(message: 'The nationality title is required')]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
