@@ -38,7 +38,7 @@ class Movie
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
-    private ?string $boxOffice = null;
+    private ?string $box_office = null;
 
     public function __construct()
     {
@@ -136,12 +136,12 @@ class Movie
 
     public function getBoxOffice(): ?string
     {
-        return $this->boxOffice;
+        return $this->box_office;
     }
 
-    public function setBoxOffice(string $boxOffice): static
+    public function setBoxOffice(string $box_office): static
     {
-        $this->boxOffice = $boxOffice;
+        $this->box_office = $box_office;
 
         return $this;
     }
