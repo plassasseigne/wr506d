@@ -40,6 +40,9 @@ class Movie
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
     private ?string $box_office = null;
 
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $metascore = null;
+
     public function __construct()
     {
         $this->actor = new ArrayCollection();
@@ -142,6 +145,18 @@ class Movie
     public function setBoxOffice(string $box_office): static
     {
         $this->box_office = $box_office;
+
+        return $this;
+    }
+
+    public function getMetascore(): ?int
+    {
+        return $this->metascore;
+    }
+
+    public function setMetascore(int $metascore): static
+    {
+        $this->metascore = $metascore;
 
         return $this;
     }
