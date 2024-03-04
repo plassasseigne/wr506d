@@ -26,6 +26,7 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
       $actor->setLastName($lastname);
       $actor->setNationality($this->getReference('nationality_' . rand(1, 25)));
       $actor->setDateBirth($faker->dateTimeBetween('-80 years', '-18 years'));
+      $actor->setBiography($faker->text(750));
 
       $manager->persist($actor);
       $this->addReference('actor_' . $i, $actor);

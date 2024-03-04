@@ -18,7 +18,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
     foreach (range(1, 50) as $i) {
       $movie = new Movie();
       $movie->setTitle($faker->unique()->movie);
-      $movie->setDescription($faker->text(250));
+      $movie->setDescription($faker->text(750));
       $movie->setReleaseDate($faker->dateTime());
       $movie->setDuration(rand(90, 180));
       $movie->setBoxOffice(rand(50000000, 999999999));
