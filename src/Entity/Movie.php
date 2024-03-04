@@ -23,26 +23,26 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'The movie title is required')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'The movie description is required')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'The release date is required')]
     private ?\DateTimeInterface $release_date = null;
 
     #[ORM\Column]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'The duration is required')]
     private ?int $duration = null;
 
@@ -52,12 +52,12 @@ class Movie
 
     #[ORM\ManyToOne(inversedBy: 'movies')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'The category is required')]
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0', nullable: true)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\Positive(message: 'The box office must be positive')]
     #[Assert\Range(
         min: 1,
@@ -67,7 +67,7 @@ class Movie
     private ?string $box_office = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\Positive(message: 'The metascore must be positive')]
     #[Assert\Range(
         min: 1,

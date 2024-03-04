@@ -37,6 +37,7 @@ class Actor
     private ?string $last_name = null;
 
     #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'actor')]
+    #[Groups(['actor:read'])]
     private Collection $movies;
 
     #[ORM\ManyToOne(inversedBy: 'actors')]

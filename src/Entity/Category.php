@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ApiResource()]
+#[ApiResource(paginationItemsPerPage: 4)]
 #[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
 class Category
 {
@@ -24,7 +24,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['movie:read'])]
+    #[Groups(['movie:read', 'actor:read'])]
     #[Assert\NotBlank(message: 'The category title is required')]
     private ?string $name = null;
 
