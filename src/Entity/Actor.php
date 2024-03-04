@@ -50,6 +50,10 @@ class Actor
     #[Assert\NotBlank(message: 'The birthday is required')]
     private ?\DateTimeInterface $date_birth = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['actor:read'])]
+    private ?string $biography = null;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
@@ -131,6 +135,18 @@ class Actor
     public function setDateBirth(\DateTimeInterface $date_birth): static
     {
         $this->date_birth = $date_birth;
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(string $biography): static
+    {
+        $this->biography = $biography;
 
         return $this;
     }
