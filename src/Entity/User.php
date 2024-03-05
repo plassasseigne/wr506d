@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
       minMessage: 'The username needs at least {{ min }} characters',
       maxMessage: 'The username must not exceed {{ max }} characters'
     )]
-    private ?string $username = null;
+    private ?string $front_username = null;
 
     public function getId(): ?int
     {
@@ -121,14 +121,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getUsername(): ?string
+    public function getFrontUsername(): ?string
     {
-        return $this->username;
+        return $this->front_username;
     }
 
-    public function setUsername(string $username): static
+    public function setFrontUsername(string $front_username): static
     {
-        $this->username = $username;
+        $this->front_username = $front_username;
 
         return $this;
     }

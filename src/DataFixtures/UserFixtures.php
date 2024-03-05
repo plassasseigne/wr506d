@@ -20,7 +20,7 @@ class UserFixtures extends Fixture
       $user = new User();
       $user->setRoles( $i === 1 ? ['ROLE_ADMIN'] : ['ROLE_USER']);
       $user->setEmail('user' . $i . '@mail.com');
-      $user->setUsername('User' . $i);
+      $user->setFrontUsername('User' . $i);
       $user->setPassword($this->passwordHasherInterface->hashPassword(
         $user,
         'test123'
