@@ -46,7 +46,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
       min: 3,
       max: 30,
-      message: 'The username needs to have a value between {{ min }} and {{ max }}'
+      minMessage: 'The username needs at least {{ min }} characters',
+      maxMessage: 'The username must not exceed {{ max }} characters'
     )]
     private ?string $username = null;
 
