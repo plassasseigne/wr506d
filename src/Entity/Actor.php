@@ -52,6 +52,7 @@ class Actor
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['actor:read'])]
+    #[Assert\NotBlank(message: 'The biography is required')]
     private ?string $biography = null;
 
     public function __construct()
