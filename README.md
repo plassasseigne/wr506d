@@ -41,6 +41,10 @@ php bin/console lexik:jwt:generate-keypair
 symfony server start
 ```
 
+## Postman
+
+Vous pouvez tester l'API grâce à la collection Postman "API - WR506D.postman_collection.json". Il vous suffit de l'importer dans le logiciel et de remplacer la variable de collection "API_URL".
+
 ## Identifiants
 
 Admin :
